@@ -112,19 +112,6 @@ if st.session_state.papers:
 
         st.divider()
 
-# -----------------------------------
-# DISPLAY SUMMARY
-# -----------------------------------
-
-if st.session_state.summary:
-
-    st.subheader(
-        "AI Literature Summary"
-    )
-
-    st.markdown(
-        st.session_state.summary
-    )
 
 # -----------------------------------
 # AI LITERATURE SUMMARY
@@ -143,7 +130,20 @@ if st.session_state.papers:
                     st.session_state.papers
                 )
             )
+# -----------------------------------
+# DISPLAY SUMMARY
+# -----------------------------------
 
+if st.session_state.summary:
+
+    st.subheader(
+        "AI Literature Summary"
+    )
+
+    st.markdown(
+        st.session_state.summary
+    )
+    
 # -----------------------------------
 # KNOWLEDGE GAP FINDER
 # -----------------------------------
