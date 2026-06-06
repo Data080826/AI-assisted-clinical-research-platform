@@ -7,10 +7,18 @@ def generate_literature_summary(papers):
 
     literature_text = ""
 
-    for paper in papers:
-        literature_text += (
-            f"Title: {paper['Title']}\n"
-        )
+   for paper in papers:
+
+    literature_text += f"""
+Title: {paper['Title']}
+Journal: {paper['Journal']}
+PMID: {paper['PMID']}
+
+Abstract:
+{paper['Abstract']}
+
+------------------------------------
+"""
 
    prompt = f"""
 You are an expert clinical research scientist.
