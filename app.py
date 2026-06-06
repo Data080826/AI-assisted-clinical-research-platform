@@ -126,6 +126,42 @@ if st.session_state.summary:
         st.session_state.summary
     )
 
+# -----------------------------------
+# AI LITERATURE SUMMARY
+# -----------------------------------
+
+if st.session_state.papers:
+
+    if st.button("🧠 Summarize Literature"):
+
+        with st.spinner(
+            "Analyzing literature..."
+        ):
+
+            st.session_state.summary = (
+                generate_literature_summary(
+                    st.session_state.papers
+                )
+            )
+
+# -----------------------------------
+# KNOWLEDGE GAP FINDER
+# -----------------------------------
+
+if st.session_state.summary:
+
+    if st.button("🔍 Find Research Gaps"):
+
+        with st.spinner(
+            "Identifying knowledge gaps..."
+        ):
+
+            st.session_state.gaps = (
+                find_research_gaps(
+                    st.session_state.summary
+                )
+            )
+
 
 # -----------------------------------
 # DISPLAY KNOWLEDGE GAPS
