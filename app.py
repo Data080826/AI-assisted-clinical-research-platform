@@ -9,11 +9,11 @@ from services.ncbi import (
     fetch_pubmed_details
 )
 
-from services.literature import (
+from modules.literature import (
     generate_literature_summary
 )
 
-from services.gaps import (
+from modules.gaps import (
     find_research_gaps
 )
 
