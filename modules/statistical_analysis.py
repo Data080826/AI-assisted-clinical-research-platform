@@ -4,6 +4,10 @@
 
 import pandas as pd
 
+from scipy.stats import (
+    ttest_ind
+)
+
 # -----------------------------------
 # DESCRIPTIVE STATISTICS
 # -----------------------------------
@@ -54,3 +58,49 @@ def categorical_summary(df):
         summaries[col] = counts
 
     return summaries
+
+# -----------------------------------
+# T TEST
+# -----------------------------------
+
+def compare_groups(
+    df,
+    outcome,
+    group
+):
+    """
+    Compare a continuous outcome
+    between two groups using
+    an independent t-test.
+    """
+
+    groups = df[group].dropna().unique()
+
+    if len(groups) != 2:
+
+        return {
+            "error":
+            "Group variable must contain exactly two groups."
+        }
+
+    group1 = df[
+        df[group] == groups[0]
+    ][outcome].dropna()
+
+    group2 = df[
+        df[group] == groups[1]
+    ][outcome].dropna()
+
+    t_stat, p_value = ttest_ind(
+        group1,
+        group2,
+        equal_var=False
+    )
+
+    return {
+        "group1": str(groups[0]),
+        "group2": str(groups[1]),
+        "mean1": round(group1.mean(), 2),
+        "mean2": round(group2.mean(), 2),
+        "p_value": round(p_value, 4)
+    }
