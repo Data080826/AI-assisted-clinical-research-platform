@@ -28,6 +28,11 @@ from modules.dataset_analysis import (
     analyze_dataset
 )
 
+from modules.statistical_analysis import (
+    descriptive_statistics,
+    categorical_summary
+)
+
 # -----------------------------------
 # PAGE CONFIG
 # -----------------------------------
@@ -358,3 +363,58 @@ if st.session_state.dataset_report:
     st.text(
         st.session_state.dataset_report
     )
+# -----------------------------------
+# STATISTICAL ANALYSIS
+# -----------------------------------
+
+if uploaded_file:
+
+    if st.button(
+        "📈 Generate Statistics"
+    ):
+
+        st.subheader(
+            "Descriptive Statistics"
+        )
+
+        stats = descriptive_statistics(
+            df
+        )
+
+        st.dataframe(
+            stats
+        )
+
+        st.subheader(
+            "Categorical Variables"
+        )
+
+        categories = categorical_summary(
+            df
+        )
+
+        for variable, table in categories.items():
+
+            st.markdown(
+                f"### {variable}"
+            )
+
+            st.dataframe(
+                table
+            )
+
+# -----------------------------------
+# T TEST
+# -----------------------------------
+
+from scipy.stats import ttest_ind
+
+def compare_groups(
+    df,
+    outcome,
+    group
+):
+
+
+
+    
