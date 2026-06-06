@@ -1,5 +1,3 @@
-# services/literature.py
-
 from services.openai_service import ask_ai
 
 
@@ -7,20 +5,20 @@ def generate_literature_summary(papers):
 
     literature_text = ""
 
-   for paper in papers:
+    for paper in papers:
 
-    literature_text += f"""
+        literature_text += f"""
 Title: {paper['Title']}
 Journal: {paper['Journal']}
 PMID: {paper['PMID']}
 
 Abstract:
-{paper['Abstract']}
+{paper.get('Abstract', 'No abstract available')}
 
 ------------------------------------
 """
 
-   prompt = f"""
+    prompt = f"""
 You are an expert clinical research scientist.
 
 Review the provided papers.
