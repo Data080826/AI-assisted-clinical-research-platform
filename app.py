@@ -61,6 +61,9 @@ research_topic = st.text_input(
 
 if st.button("Search Literature"):
 
+    st.session_state.summary = ""
+    st.session_state.gaps = ""
+
     if research_topic:
 
         with st.spinner("Searching PubMed..."):
