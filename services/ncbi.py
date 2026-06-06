@@ -96,7 +96,6 @@ def fetch_pubmed_details(pmids):
             {
         "Title": str(title),
         "Journal": str(journal),
-        "Date": str(pub_date),
         "PMID": pmid,
         "Abstract": abstract
             }
