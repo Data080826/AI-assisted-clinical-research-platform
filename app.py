@@ -109,48 +109,6 @@ if st.session_state.papers:
         st.divider()
 
 # -----------------------------------
-# AI LITERATURE SUMMARY
-# -----------------------------------
-
-if st.session_state.papers:
-
-    if st.button("🧠 Summarize Literature"):
-
-        literature_text = ""
-
-        for paper in st.session_state.papers:
-
-            literature_text += (
-                f"Title: {paper['Title']}\n"
-            )
-
-        with st.spinner(
-            "Analyzing literature..."
-        ):
-
-            prompt = f"""
-Review these scientific papers.
-
-Generate:
-
-1. Literature Overview
-2. Major Findings
-3. Current Limitations
-4. Knowledge Gaps
-5. Future Research Directions
-
-Papers:
-
-{literature_text}
-"""
-
-            summary = ask_ai(prompt)
-
-            st.session_state.summary = (
-                summary
-            )
-
-# -----------------------------------
 # DISPLAY SUMMARY
 # -----------------------------------
 
