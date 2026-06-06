@@ -17,6 +17,10 @@ from modules.gaps import (
     find_research_gaps
 )
 
+from modules.question_builder import (
+    generate_research_question
+)
+
 # -----------------------------------
 # PAGE CONFIG
 # -----------------------------------
@@ -183,4 +187,36 @@ if st.session_state.gaps:
         st.session_state.gaps
     )
 
+# -----------------------------------
+# RESEARCH QUESTION GENERATOR
+# -----------------------------------
 
+if st.session_state.gaps:
+
+    if st.button(
+        "🎯 Generate Research Question"
+    ):
+
+        with st.spinner(
+            "Generating research question..."
+        ):
+
+            st.session_state.research_question = (
+                generate_research_question(
+                    st.session_state.gaps
+                )
+            )
+
+# -----------------------------------
+# DISPLAY RESEARCH QUESTION
+# -----------------------------------
+
+if st.session_state.research_question:
+
+    st.subheader(
+        "🎯 Research Question"
+    )
+
+    st.markdown(
+        st.session_state.research_question
+    )
