@@ -419,9 +419,19 @@ if uploaded_file:
         ).columns
     )
 
-    group_cols = list(
-        df.columns
-    )
+    group_cols = []
+
+    for col in df.columns:
+
+        unique_values = (
+            df[col]
+            .dropna()
+            .nunique()
+        )
+
+        if unique_values == 2:
+
+            group_cols.append(col)
 
     outcome = st.selectbox(
         "Outcome Variable",
