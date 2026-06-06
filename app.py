@@ -9,8 +9,12 @@ from services.ncbi import (
     fetch_pubmed_details
 )
 
-from services.openai_service import (
-    ask_ai
+from services.literature import (
+    generate_literature_summary
+)
+
+from services.gaps import (
+    find_research_gaps
 )
 
 # -----------------------------------
@@ -122,42 +126,6 @@ if st.session_state.summary:
         st.session_state.summary
     )
 
-# -----------------------------------
-# KNOWLEDGE GAP FINDER
-# -----------------------------------
-
-if st.session_state.summary:
-
-    if st.button("🔍 Find Research Gaps"):
-
-        with st.spinner(
-            "Identifying knowledge gaps..."
-        ):
-
-            prompt = f"""
-You are a clinical research expert.
-
-Based on this literature summary:
-
-{st.session_state.summary}
-
-Identify:
-
-1. Major knowledge gaps
-2. Understudied populations
-3. Unanswered clinical questions
-4. Potential future research topics
-
-Rank each gap by:
-
-- Clinical Impact (1-10)
-- Novelty (1-10)
-- Feasibility (1-10)
-"""
-
-            gaps = ask_ai(prompt)
-
-            st.session_state.gaps = gaps
 
 # -----------------------------------
 # DISPLAY KNOWLEDGE GAPS
