@@ -94,11 +94,11 @@ def fetch_pubmed_details(pmids):
 
         papers.append(
             {
-                "Title": str(title),
-                "Journal": str(journal),
-                "PMID": pmid,
-                "Abstract": abstract
+        "Title": str(title),
+        "Journal": str(journal),
+        "Date": str(pub_date),
+        "PMID": pmid,
+        "Abstract": abstract
             }
         )
-
     return papers
