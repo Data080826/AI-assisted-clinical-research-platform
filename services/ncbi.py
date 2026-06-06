@@ -39,7 +39,6 @@ def search_pubmed(
 
 from Bio import Entrez
 
-
 def fetch_pubmed_details(pmids):
 
     if not pmids:
@@ -72,6 +71,29 @@ def fetch_pubmed_details(pmids):
             ""
         )
 
+        # -----------------------------------
+        # EXTRACT DATE
+        # -----------------------------------
+
+        date = "Not available"
+
+        try:
+            pubdate = article_data["Journal"]["JournalIssue"]["PubDate"]
+
+            year = pubdate.get("Year", "")
+            month = pubdate.get("Month", "")
+
+            date = f"{month} {year}".strip()
+
+            if not date:
+                date = pubdate.get(
+                    "MedlineDate",
+                    "Not available"
+                )
+
+        except Exception:
+            pass
+
         pmid = str(
             article["MedlineCitation"]["PMID"]
         )
@@ -94,10 +116,12 @@ def fetch_pubmed_details(pmids):
 
         papers.append(
             {
-        "Title": str(title),
-        "Journal": str(journal),
-        "PMID": pmid,
-        "Abstract": abstract
+                "Title": str(title),
+                "Journal": str(journal),
+                "Date": str(date),
+                "PMID": pmid,
+                "Abstract": abstract
             }
         )
+
     return papers
