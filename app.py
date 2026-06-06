@@ -30,7 +30,8 @@ from modules.dataset_analysis import (
 
 from modules.statistical_analysis import (
     descriptive_statistics,
-    categorical_summary
+    categorical_summary,
+    compare_groups
 )
 
 # -----------------------------------
@@ -402,7 +403,71 @@ if uploaded_file:
             st.dataframe(
                 table
             )
+# -----------------------------------
+# GROUP COMPARISON
+# -----------------------------------
 
+st.subheader(
+    "Group Comparison (T-Test)"
+)
+
+numeric_cols = list(
+    df.select_dtypes(
+        include="number"
+    ).columns
+)
+
+group_cols = list(
+    df.columns
+)
+
+outcome = st.selectbox(
+    "Outcome Variable",
+    numeric_cols
+)
+
+group = st.selectbox(
+    "Group Variable",
+    group_cols
+)
+
+if st.button(
+    "Run T-Test"
+):
+
+    results = compare_groups(
+        df,
+        outcome,
+        group
+    )
+
+    if "error" in results:
+
+        st.error(
+            results["error"]
+        )
+
+    else:
+
+        st.write(
+            f"Group 1: {results['group1']}"
+        )
+
+        st.write(
+            f"Mean: {results['mean1']}"
+        )
+
+        st.write(
+            f"Group 2: {results['group2']}"
+        )
+
+        st.write(
+            f"Mean: {results['mean2']}"
+        )
+
+        st.write(
+            f"P-value: {results['p_value']}"
+        )
 # -----------------------------------
 # T TEST
 # -----------------------------------
