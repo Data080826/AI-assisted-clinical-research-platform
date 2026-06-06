@@ -17,10 +17,10 @@ if st.button("Search Literature"):
 
     with st.spinner("Searching PubMed..."):
 
-    pmids = search_pubmed(
-        research_topic,
-        max_results=10
-    )
+        pmids = search_pubmed(
+            research_topic,
+            max_results=10
+        )
 
     papers = fetch_pubmed_details(
         pmids
