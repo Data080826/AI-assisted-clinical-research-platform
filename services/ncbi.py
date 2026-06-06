@@ -1,11 +1,25 @@
+# -----------------------------------
+# IMPORTS
+# -----------------------------------
+
 from Bio import Entrez
 import streamlit as st
+
+# -----------------------------------
+# NCBI CONFIGURATION
+# -----------------------------------
 
 Entrez.email = st.secrets["NCBI_EMAIL"]
 Entrez.api_key = st.secrets["NCBI_API_KEY"]
 
+# -----------------------------------
+# PUBMED SEARCH
+# -----------------------------------
 
-def search_pubmed(query, max_results=10):
+def search_pubmed(
+    query,
+    max_results=10
+):
 
     handle = Entrez.esearch(
         db="pubmed",
@@ -14,12 +28,18 @@ def search_pubmed(query, max_results=10):
     )
 
     record = Entrez.read(handle)
+
     handle.close()
 
     return record["IdList"]
 
+# -----------------------------------
+# PUBMED DETAILS
+# -----------------------------------
 
-def fetch_pubmed_details(pmids):
+def fetch_pubmed_details(
+    pmids
+):
 
     if not pmids:
         return []
@@ -30,6 +50,7 @@ def fetch_pubmed_details(pmids):
     )
 
     records = Entrez.read(handle)
+
     handle.close()
 
     papers = []
@@ -38,10 +59,22 @@ def fetch_pubmed_details(pmids):
 
         papers.append(
             {
-                "Title": item.get("Title", ""),
-                "Journal": item.get("FullJournalName", ""),
-                "Date": item.get("PubDate", ""),
-                "PMID": item.get("Id", "")
+                "Title": item.get(
+                    "Title",
+                    ""
+                ),
+                "Journal": item.get(
+                    "FullJournalName",
+                    ""
+                ),
+                "Date": item.get(
+                    "PubDate",
+                    ""
+                ),
+                "PMID": item.get(
+                    "Id",
+                    ""
+                )
             }
         )
 
