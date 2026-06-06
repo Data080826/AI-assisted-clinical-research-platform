@@ -68,11 +68,20 @@ def compare_groups(
     outcome,
     group
 ):
-    """
-    Compare a continuous outcome
-    between two groups using
-    an independent t-test.
-    """
+
+    if outcome not in df.columns:
+
+        return {
+            "error":
+            f"Outcome column '{outcome}' not found."
+        }
+
+    if group not in df.columns:
+
+        return {
+            "error":
+            f"Group column '{group}' not found."
+        }
 
     groups = df[group].dropna().unique()
 
