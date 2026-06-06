@@ -442,7 +442,16 @@ if uploaded_file:
         "Group Variable",
         group_cols
     )
+    st.info(
+    """
+    Outcome Variable:
+    Continuous numeric variable
 
+    Group Variable:
+    Binary variable with exactly two groups
+    (e.g. Treatment vs Control)
+    """
+    )
     if st.button(
         "Run T-Test"
     ):
