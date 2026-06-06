@@ -24,6 +24,10 @@ from modules.study_design import (
     generate_study_design
 )
 
+from modules.dataset_analysis import (
+    analyze_dataset
+)
+
 # -----------------------------------
 # PAGE CONFIG
 # -----------------------------------
@@ -52,7 +56,9 @@ if "research_question" not in st.session_state:
 
 if "study_design" not in st.session_state:
     st.session_state.study_design = ""
-    
+
+if "dataset_report" not in st.session_state:
+    st.session_state.dataset_report = ""    
 # -----------------------------------
 # PAGE TITLE
 # -----------------------------------
@@ -282,4 +288,73 @@ if st.session_state.study_design:
 
     st.markdown(
         st.session_state.study_design
+    )
+# -----------------------------------
+# DATASET UPLOAD
+# -----------------------------------
+
+st.header(
+    "📊 Dataset Analysis"
+)
+
+uploaded_file = st.file_uploader(
+    "Upload Dataset",
+    type=["csv", "xlsx"]
+)
+# -----------------------------------
+# LOAD DATA
+# -----------------------------------
+
+if uploaded_file:
+
+    import pandas as pd
+
+    if uploaded_file.name.endswith(
+        ".csv"
+    ):
+
+        df = pd.read_csv(
+            uploaded_file
+        )
+
+    else:
+
+        df = pd.read_excel(
+            uploaded_file
+        )
+
+    st.dataframe(
+        df.head()
+    )
+
+# -----------------------------------
+# DATASET REPORT
+# -----------------------------------
+
+if uploaded_file:
+
+    if st.button(
+        "Analyze Dataset"
+    ):
+
+        report = analyze_dataset(
+            df
+        )
+
+        st.session_state.dataset_report = (
+            report
+        )
+
+# -----------------------------------
+# DISPLAY REPORT
+# -----------------------------------
+
+if st.session_state.dataset_report:
+
+    st.subheader(
+        "Dataset Overview"
+    )
+
+    st.text(
+        st.session_state.dataset_report
     )
