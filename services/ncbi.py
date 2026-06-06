@@ -37,16 +37,19 @@ def search_pubmed(
 # PUBMED DETAILS
 # -----------------------------------
 
-def fetch_pubmed_details(
-    pmids
-):
+from Bio import Entrez
+
+
+def fetch_pubmed_details(pmids):
 
     if not pmids:
         return []
 
-    handle = Entrez.esummary(
+    handle = Entrez.efetch(
         db="pubmed",
-        id=",".join(pmids)
+        id=",".join(pmids),
+        rettype="abstract",
+        retmode="xml"
     )
 
     records = Entrez.read(handle)
@@ -55,26 +58,46 @@ def fetch_pubmed_details(
 
     papers = []
 
-    for item in records:
+    for article in records["PubmedArticle"]:
+
+        article_data = article["MedlineCitation"]["Article"]
+
+        title = article_data.get(
+            "ArticleTitle",
+            ""
+        )
+
+        journal = article_data["Journal"].get(
+            "Title",
+            ""
+        )
+
+        pmid = str(
+            article["MedlineCitation"]["PMID"]
+        )
+
+        abstract = ""
+
+        if "Abstract" in article_data:
+
+            abstract_parts = article_data[
+                "Abstract"
+            ].get(
+                "AbstractText",
+                []
+            )
+
+            abstract = " ".join(
+                str(part)
+                for part in abstract_parts
+            )
 
         papers.append(
             {
-                "Title": item.get(
-                    "Title",
-                    ""
-                ),
-                "Journal": item.get(
-                    "FullJournalName",
-                    ""
-                ),
-                "Date": item.get(
-                    "PubDate",
-                    ""
-                ),
-                "PMID": item.get(
-                    "Id",
-                    ""
-                )
+                "Title": str(title),
+                "Journal": str(journal),
+                "PMID": pmid,
+                "Abstract": abstract
             }
         )
 
