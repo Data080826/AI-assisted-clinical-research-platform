@@ -2,3 +2,5 @@ streamlit
 openai
 biopython
 pandas
+numpy
+scipy
