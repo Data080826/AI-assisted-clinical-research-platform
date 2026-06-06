@@ -49,6 +49,14 @@ st.set_page_config(
 # -----------------------------------
 if "api_key_active" not in st.session_state:
     st.session_state.api_key_active = None
+
+if not st.session_state.api_key_active:
+
+    st.error(
+        "Please enter your OpenAI API key in the sidebar."
+    )
+
+    st.stop()
     
 if "papers" not in st.session_state:
     st.session_state.papers = []
