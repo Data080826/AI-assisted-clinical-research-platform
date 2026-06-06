@@ -235,7 +235,21 @@ if st.session_state.research_question:
     st.markdown(
         st.session_state.research_question
     )
+# -----------------------------------
+# STUDY TYPE
+# -----------------------------------
 
+study_type = st.selectbox(
+    "Preferred Study Type",
+    [
+        "Auto Select",
+        "Retrospective Cohort",
+        "Prospective Cohort",
+        "Case-Control",
+        "Cross-Sectional",
+        "Randomized Trial"
+    ]
+    )
 # -----------------------------------
 # STUDY DESIGN GENERATOR
 # -----------------------------------
