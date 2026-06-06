@@ -20,6 +20,9 @@ from modules.gaps import (
 from modules.question_builder import (
     generate_research_question
 )
+from modules.study_design import (
+    generate_study_design
+)
 
 # -----------------------------------
 # PAGE CONFIG
@@ -46,6 +49,9 @@ if "gaps" not in st.session_state:
 
 if "research_question" not in st.session_state:
     st.session_state.research_question = ""
+
+if "study_design" not in st.session_state:
+    st.session_state.study_design = ""
     
 # -----------------------------------
 # PAGE TITLE
@@ -219,4 +225,38 @@ if st.session_state.research_question:
 
     st.markdown(
         st.session_state.research_question
+    )
+
+# -----------------------------------
+# STUDY DESIGN GENERATOR
+# -----------------------------------
+
+if st.session_state.research_question:
+
+    if st.button(
+        "📋 Generate Study Design"
+    ):
+
+        with st.spinner(
+            "Designing study..."
+        ):
+
+            st.session_state.study_design = (
+                generate_study_design(
+                    st.session_state.research_question
+                )
+            )
+
+# -----------------------------------
+# DISPLAY STUDY DESIGN
+# -----------------------------------
+
+if st.session_state.study_design:
+
+    st.subheader(
+        "📋 Study Design"
+    )
+
+    st.markdown(
+        st.session_state.study_design
     )
