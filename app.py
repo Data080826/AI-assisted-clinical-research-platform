@@ -126,6 +126,15 @@ if st.session_state.papers:
             f"PMID: {paper['PMID']}"
         )
 
+        with st.expander("📄 View Abstract"):
+
+            st.write(
+                paper.get(
+                    "Abstract",
+                    "Abstract not available"
+                )
+            )
+
         st.divider()
 
 
