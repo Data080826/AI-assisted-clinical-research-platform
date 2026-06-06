@@ -1,1 +1,6 @@
-
+PAGES = {
+    "📚 Literature Search": "literature",
+    "🔍 Gap Finder": "gaps",
+    "🎯 Research Question": "question",
+    "📋 Study Design": "study"
+}
