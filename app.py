@@ -24,6 +24,16 @@ st.set_page_config(
 )
 
 # -----------------------------------
+# SESSION STATE
+# -----------------------------------
+
+if "papers" not in st.session_state:
+    st.session_state.papers = []
+
+if "summary" not in st.session_state:
+    st.session_state.summary = ""
+    
+# -----------------------------------
 # PAGE TITLE
 # -----------------------------------
 
