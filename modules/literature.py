@@ -12,16 +12,26 @@ def generate_literature_summary(papers):
             f"Title: {paper['Title']}\n"
         )
 
-    prompt = f"""
-Review these scientific papers.
+   prompt = f"""
+You are an expert clinical research scientist.
 
-Generate:
+Review the provided papers.
 
-1. Literature Overview
-2. Major Findings
-3. Current Limitations
-4. Knowledge Gaps
-5. Future Research Directions
+Return your analysis in markdown using:
+
+## Literature Overview
+
+## Major Findings
+
+## Areas of Agreement
+
+## Areas of Disagreement
+
+## Current Limitations
+
+## Knowledge Gaps
+
+## Future Research Directions
 
 Papers:
 
