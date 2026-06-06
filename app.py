@@ -407,79 +407,66 @@ if uploaded_file:
 # GROUP COMPARISON
 # -----------------------------------
 
-st.subheader(
-    "Group Comparison (T-Test)"
-)
+if uploaded_file:
 
-numeric_cols = list(
-    df.select_dtypes(
-        include="number"
-    ).columns
-)
-
-group_cols = list(
-    df.columns
-)
-
-outcome = st.selectbox(
-    "Outcome Variable",
-    numeric_cols
-)
-
-group = st.selectbox(
-    "Group Variable",
-    group_cols
-)
-
-if st.button(
-    "Run T-Test"
-):
-
-    results = compare_groups(
-        df,
-        outcome,
-        group
+    st.subheader(
+        "Group Comparison (T-Test)"
     )
 
-    if "error" in results:
+    numeric_cols = list(
+        df.select_dtypes(
+            include="number"
+        ).columns
+    )
 
-        st.error(
-            results["error"]
+    group_cols = list(
+        df.columns
+    )
+
+    outcome = st.selectbox(
+        "Outcome Variable",
+        numeric_cols
+    )
+
+    group = st.selectbox(
+        "Group Variable",
+        group_cols
+    )
+
+    if st.button(
+        "Run T-Test"
+    ):
+
+        results = compare_groups(
+            df,
+            outcome,
+            group
         )
 
-    else:
+        if "error" in results:
 
-        st.write(
-            f"Group 1: {results['group1']}"
-        )
+            st.error(
+                results["error"]
+            )
 
-        st.write(
-            f"Mean: {results['mean1']}"
-        )
+        else:
 
-        st.write(
-            f"Group 2: {results['group2']}"
-        )
+            st.write(
+                f"Group 1: {results['group1']}"
+            )
 
-        st.write(
-            f"Mean: {results['mean2']}"
-        )
+            st.write(
+                f"Mean: {results['mean1']}"
+            )
 
-        st.write(
-            f"P-value: {results['p_value']}"
-        )
-# -----------------------------------
-# T TEST
-# -----------------------------------
+            st.write(
+                f"Group 2: {results['group2']}"
+            )
 
-from scipy.stats import ttest_ind
+            st.write(
+                f"Mean: {results['mean2']}"
+            )
 
-def compare_groups(
-    df,
-    outcome,
-    group
-):
-
-
-
-    
+            st.write(
+                f"P-value: {results['p_value']}"
+            )
