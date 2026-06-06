@@ -1,3 +1,7 @@
+# -----------------------------------
+# IMPORTS
+# -----------------------------------
+
 import streamlit as st
 
 from services.ncbi import (
@@ -5,24 +9,46 @@ from services.ncbi import (
     fetch_pubmed_details
 )
 
+from services.openai_service import (
+    ask_ai
+)
+
+# -----------------------------------
+# PAGE CONFIG
+# -----------------------------------
+
 st.set_page_config(
     page_title="Clinical Research Copilot",
     page_icon="📚",
     layout="wide"
 )
 
+# -----------------------------------
+# PAGE TITLE
+# -----------------------------------
+
 st.title("📚 Clinical Research Copilot")
+
+# -----------------------------------
+# RESEARCH TOPIC INPUT
+# -----------------------------------
 
 research_topic = st.text_input(
     "Enter a research topic",
     placeholder="Semaglutide chronic kidney disease"
 )
 
+# -----------------------------------
+# PUBMED SEARCH
+# -----------------------------------
+
 if st.button("Search Literature"):
 
     if research_topic:
 
-        with st.spinner("Searching PubMed..."):
+        with st.spinner(
+            "Searching PubMed..."
+        ):
 
             pmids = search_pubmed(
                 research_topic,
@@ -36,6 +62,10 @@ if st.button("Search Literature"):
         st.success(
             f"Found {len(papers)} papers"
         )
+
+        # -----------------------------------
+        # DISPLAY PAPERS
+        # -----------------------------------
 
         for paper in papers:
 
@@ -57,7 +87,56 @@ if st.button("Search Literature"):
 
             st.divider()
 
+        # -----------------------------------
+        # AI LITERATURE SUMMARY
+        # -----------------------------------
+
+        literature_text = ""
+
+        for paper in papers:
+
+            literature_text += (
+                f"Title: {paper['Title']}\n"
+            )
+
+        if st.button(
+            "🧠 Summarize Literature"
+        ):
+
+            with st.spinner(
+                "Analyzing literature..."
+            ):
+
+                prompt = f"""
+                Review these scientific papers.
+
+                Generate:
+
+                1. Literature Overview
+                2. Major Findings
+                3. Current Limitations
+                4. Knowledge Gaps
+                5. Future Research Directions
+
+                Papers:
+
+                {literature_text}
+                """
+
+                summary = ask_ai(
+                    prompt
+                )
+
+            st.subheader(
+                "AI Literature Summary"
+            )
+
+            st.markdown(
+                summary
+            )
+
     else:
+
         st.warning(
             "Please enter a research topic."
         )
