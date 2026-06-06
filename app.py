@@ -46,93 +46,15 @@ if st.button("Search Literature"):
 
     if research_topic:
 
-        with st.spinner(
-            "Searching PubMed..."
-        ):
+        with st.spinner("Searching PubMed..."):
 
             pmids = search_pubmed(
                 research_topic,
                 max_results=10
             )
 
-            papers = fetch_pubmed_details(
-                pmids
-            )
-
-        st.success(
-            f"Found {len(papers)} papers"
-        )
-
-        # -----------------------------------
-        # DISPLAY PAPERS
-        # -----------------------------------
-
-        for paper in papers:
-
-            st.markdown(
-                f"### {paper['Title']}"
-            )
-
-            st.write(
-                f"Journal: {paper['Journal']}"
-            )
-
-            st.write(
-                f"Date: {paper['Date']}"
-            )
-
-            st.write(
-                f"PMID: {paper['PMID']}"
-            )
-
-            st.divider()
-
-        # -----------------------------------
-        # AI LITERATURE SUMMARY
-        # -----------------------------------
-
-        literature_text = ""
-
-        for paper in papers:
-
-            literature_text += (
-                f"Title: {paper['Title']}\n"
-            )
-
-        if st.button(
-            "🧠 Summarize Literature"
-        ):
-
-            with st.spinner(
-                "Analyzing literature..."
-            ):
-
-                prompt = f"""
-                Review these scientific papers.
-
-                Generate:
-
-                1. Literature Overview
-                2. Major Findings
-                3. Current Limitations
-                4. Knowledge Gaps
-                5. Future Research Directions
-
-                Papers:
-
-                {literature_text}
-                """
-
-                summary = ask_ai(
-                    prompt
-                )
-
-            st.subheader(
-                "AI Literature Summary"
-            )
-
-            st.markdown(
-                summary
+            st.session_state.papers = (
+                fetch_pubmed_details(pmids)
             )
 
     else:
@@ -140,3 +62,91 @@ if st.button("Search Literature"):
         st.warning(
             "Please enter a research topic."
         )
+
+# -----------------------------------
+# DISPLAY PAPERS
+# -----------------------------------
+
+if st.session_state.papers:
+
+    papers = st.session_state.papers
+
+    st.success(
+        f"Found {len(papers)} papers"
+    )
+
+    for paper in papers:
+
+        st.markdown(
+            f"### {paper['Title']}"
+        )
+
+        st.write(
+            f"Journal: {paper['Journal']}"
+        )
+
+        st.write(
+            f"Date: {paper['Date']}"
+        )
+
+        st.write(
+            f"PMID: {paper['PMID']}"
+        )
+
+        st.divider()
+
+# -----------------------------------
+# AI LITERATURE SUMMARY
+# -----------------------------------
+
+if st.session_state.papers:
+
+    if st.button("🧠 Summarize Literature"):
+
+        literature_text = ""
+
+        for paper in st.session_state.papers:
+
+            literature_text += (
+                f"Title: {paper['Title']}\n"
+            )
+
+        with st.spinner(
+            "Analyzing literature..."
+        ):
+
+            prompt = f"""
+Review these scientific papers.
+
+Generate:
+
+1. Literature Overview
+2. Major Findings
+3. Current Limitations
+4. Knowledge Gaps
+5. Future Research Directions
+
+Papers:
+
+{literature_text}
+"""
+
+            summary = ask_ai(prompt)
+
+            st.session_state.summary = (
+                summary
+            )
+
+# -----------------------------------
+# DISPLAY SUMMARY
+# -----------------------------------
+
+if st.session_state.summary:
+
+    st.subheader(
+        "AI Literature Summary"
+    )
+
+    st.markdown(
+        st.session_state.summary
+    )
