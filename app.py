@@ -419,9 +419,16 @@ if uploaded_file:
         ).columns
     )
 
+    outcome = st.selectbox(
+        "Outcome Variable",
+        numeric_cols
+    )
     group_cols = []
 
     for col in df.columns:
+
+        if col == outcome:
+            continue
 
         unique_values = (
             df[col]
@@ -432,16 +439,28 @@ if uploaded_file:
         if unique_values == 2:
 
             group_cols.append(col)
+        
+ 
 
-    outcome = st.selectbox(
-        "Outcome Variable",
-        numeric_cols
-    )
+    # -----------------------------------
+    # BINARY GROUP VARIABLES
+    # -----------------------------------
 
-    group = st.selectbox(
-        "Group Variable",
-        group_cols
-    )
+    if not group_cols:
+
+        st.warning(
+            "No binary group variables found. "
+            "A T-test requires a grouping variable "
+            "with exactly two unique values."
+        )
+
+    else:
+
+        group = st.selectbox(
+            "Group Variable",
+            group_cols
+        )
+    
     st.info(
     """
     Outcome Variable:
