@@ -105,9 +105,9 @@ if st.session_state.papers:
             f"Journal: {paper['Journal']}"
         )
 
-        st.write(
-            f"Date: {paper['Date']}"
-        )
+      st.write(
+        f"Date: {paper.get('Date', 'Not available')}"
+      )
 
         st.write(
             f"PMID: {paper['PMID']}"
