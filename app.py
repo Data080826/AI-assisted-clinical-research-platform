@@ -1,5 +1,10 @@
 import streamlit as st
 
+from services.ncbi import (
+    search_pubmed,
+    fetch_pubmed_details
+)
+
 st.set_page_config(
     page_title="Clinical Research Copilot",
     page_icon="📚",
@@ -15,37 +20,44 @@ research_topic = st.text_input(
 
 if st.button("Search Literature"):
 
-    with st.spinner("Searching PubMed..."):
+    if research_topic:
 
-        pmids = search_pubmed(
-            research_topic,
-            max_results=10
+        with st.spinner("Searching PubMed..."):
+
+            pmids = search_pubmed(
+                research_topic,
+                max_results=10
+            )
+
+            papers = fetch_pubmed_details(
+                pmids
+            )
+
+        st.success(
+            f"Found {len(papers)} papers"
         )
 
-    papers = fetch_pubmed_details(
-        pmids
-    )
+        for paper in papers:
 
-st.success(
-    f"Found {len(papers)} papers"
-)
+            st.markdown(
+                f"### {paper['Title']}"
+            )
 
-for paper in papers:
+            st.write(
+                f"Journal: {paper['Journal']}"
+            )
 
-    st.markdown(
-        f"### {paper['Title']}"
-    )
+            st.write(
+                f"Date: {paper['Date']}"
+            )
 
-    st.write(
-        f"Journal: {paper['Journal']}"
-    )
+            st.write(
+                f"PMID: {paper['PMID']}"
+            )
 
-    st.write(
-        f"Date: {paper['Date']}"
-    )
+            st.divider()
 
-    st.write(
-        f"PMID: {paper['PMID']}"
-    )
-
-    st.divider()
+    else:
+        st.warning(
+            "Please enter a research topic."
+        )
