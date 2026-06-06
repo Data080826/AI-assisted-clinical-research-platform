@@ -32,6 +32,9 @@ if "papers" not in st.session_state:
 
 if "summary" not in st.session_state:
     st.session_state.summary = ""
+
+if "gaps" not in st.session_state:
+    st.session_state.gaps = ""
     
 # -----------------------------------
 # PAGE TITLE
@@ -160,3 +163,56 @@ if st.session_state.summary:
     st.markdown(
         st.session_state.summary
     )
+
+# -----------------------------------
+# KNOWLEDGE GAP FINDER
+# -----------------------------------
+
+if st.session_state.summary:
+
+    if st.button("🔍 Find Research Gaps"):
+
+        with st.spinner(
+            "Identifying knowledge gaps..."
+        ):
+
+            prompt = f"""
+You are a clinical research expert.
+
+Based on this literature summary:
+
+{st.session_state.summary}
+
+Identify:
+
+1. Major knowledge gaps
+2. Understudied populations
+3. Unanswered clinical questions
+4. Potential future research topics
+
+Rank each gap by:
+
+- Clinical Impact (1-10)
+- Novelty (1-10)
+- Feasibility (1-10)
+"""
+
+            gaps = ask_ai(prompt)
+
+            st.session_state.gaps = gaps
+
+# -----------------------------------
+# DISPLAY KNOWLEDGE GAPS
+# -----------------------------------
+
+if st.session_state.gaps:
+
+    st.subheader(
+        "🔍 Research Opportunities"
+    )
+
+    st.markdown(
+        st.session_state.gaps
+    )
+
+
