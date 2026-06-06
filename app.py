@@ -39,6 +39,9 @@ if "summary" not in st.session_state:
 
 if "gaps" not in st.session_state:
     st.session_state.gaps = ""
+
+if "research_question" not in st.session_state:
+    st.session_state.research_question = ""
     
 # -----------------------------------
 # PAGE TITLE
