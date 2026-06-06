@@ -64,7 +64,10 @@ if "study_design" not in st.session_state:
     st.session_state.study_design = ""
 
 if "dataset_report" not in st.session_state:
-    st.session_state.dataset_report = ""    
+    st.session_state.dataset_report = "" 
+
+if "df" not in st.session_state:
+    st.session_state.df = None
 # -----------------------------------
 # PAGE TITLE
 # -----------------------------------
@@ -308,6 +311,13 @@ uploaded_file = st.file_uploader(
     type=["csv", "xlsx"]
 )
 # -----------------------------------
+# RESET DATASET STATE
+# -----------------------------------
+
+if uploaded_file is None:
+
+    st.session_state.dataset_report = ""
+# -----------------------------------
 # LOAD DATA
 # -----------------------------------
 
@@ -332,6 +342,10 @@ if uploaded_file:
     st.dataframe(
         df.head()
     )
+    if uploaded_file is None:
+
+        st.session_state.df = None
+        st.session_state.dataset_report = ""
 
 # -----------------------------------
 # DATASET REPORT
@@ -355,7 +369,7 @@ if uploaded_file:
 # DISPLAY REPORT
 # -----------------------------------
 
-if st.session_state.dataset_report:
+if uploaded_file and st.session_state.dataset_report:
 
     st.subheader(
         "Dataset Overview"
