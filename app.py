@@ -440,9 +440,10 @@ if uploaded_file:
     )
 
     outcome = st.selectbox(
-        "Outcome Variable",
-        numeric_cols
-    )
+    "Outcome Variable",
+    numeric_cols,
+    key="outcome_variable"
+)
     group_cols = []
 
     for col in df.columns:
@@ -478,7 +479,8 @@ if uploaded_file:
 
         group = st.selectbox(
             "Group Variable",
-            group_cols
+            group_cols,
+            key="group_variable"
         )
     
     st.info(
