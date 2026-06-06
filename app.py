@@ -6,16 +6,15 @@ st.set_page_config(
     layout="wide"
 )
 
-st.title("Clinical Research Copilot")
+st.title("📚 Clinical Research Copilot")
 
-page = st.sidebar.radio(
-    "Navigation",
-    [
-        "Literature Search",
-        "Gap Finder",
-        "Research Question",
-        "Study Design"
-    ]
+research_topic = st.text_input(
+    "Enter a research topic",
+    placeholder="Semaglutide chronic kidney disease"
 )
 
-st.write("Selected:", page)
+if st.button("Search Literature"):
+
+    st.write(
+        f"Searching literature for: {research_topic}"
+    )
