@@ -11,7 +11,8 @@ from services.openai_service import (
 # -----------------------------------
 
 def generate_study_design(
-    research_question
+    research_question,
+    study_type
 ):
     """
     Generate a clinical study design
