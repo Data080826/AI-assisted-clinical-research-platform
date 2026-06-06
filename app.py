@@ -317,6 +317,12 @@ uploaded_file = st.file_uploader(
 if uploaded_file is None:
 
     st.session_state.dataset_report = ""
+
+    if "outcome_variable" in st.session_state:
+        del st.session_state["outcome_variable"]
+
+    if "group_variable" in st.session_state:
+        del st.session_state["group_variable"]
 # -----------------------------------
 # LOAD DATA
 # -----------------------------------
