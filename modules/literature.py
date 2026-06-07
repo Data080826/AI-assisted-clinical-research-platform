@@ -1,7 +1,10 @@
 from services.openai_service import ask_ai
 
 
-def generate_literature_summary(papers):
+def generate_literature_summary(
+    papers,
+    api_key
+):
 
     literature_text = ""
 
