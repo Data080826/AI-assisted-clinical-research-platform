@@ -44,4 +44,7 @@ Papers:
 {literature_text}
 """
 
-    return ask_ai(prompt)
+    return ask_ai(
+        prompt,
+        api_key
+    )
