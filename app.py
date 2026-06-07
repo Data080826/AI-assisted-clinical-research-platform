@@ -50,23 +50,21 @@ st.set_page_config(
 # CUSTOM TITLE CSS
 # ----------------------------
 st.markdown("""
-<link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
-
 <style>
 .tech-title {
     font-family: 'Audiowide', sans-serif;
-    font-size: 3.2rem;
-    letter-spacing: 6px;
+    font-size: clamp(1.8rem, 3vw, 3rem);
+    letter-spacing: 4px;
     text-align: center;
+    white-space: nowrap;
 
     background: linear-gradient(
         90deg,
-        #00BFFF 0%,
-        #4F7DFF 40%,
-        #7B61FF 70%,
-        #D946EF 100%
+        #00BFFF,
+        #4F7DFF,
+        #7B61FF,
+        #D946EF
     );
-
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
 }
@@ -113,11 +111,6 @@ if "dataset_report" not in st.session_state:
 
 if "df" not in st.session_state:
     st.session_state.df = None
-# -----------------------------------
-# PAGE TITLE
-# -----------------------------------
-
-st.title("📚 Clinical Research Copilot")
 
 # -----------------------------------
 # SIDEBAR
