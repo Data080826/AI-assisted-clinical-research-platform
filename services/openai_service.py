@@ -1,11 +1,12 @@
 from openai import OpenAI
+import streamlit as st
 
-def ask_ai(prompt, api_key):
+def ask_ai(prompt):
 
     try:
 
         client = OpenAI(
-            api_key=api_key
+            api_key=st.secrets["OPENAI_API_KEY"]
         )
 
         response = client.chat.completions.create(
@@ -21,5 +22,4 @@ def ask_ai(prompt, api_key):
         return response.choices[0].message.content
 
     except Exception as e:
-
         return f"ERROR: {str(e)}"
