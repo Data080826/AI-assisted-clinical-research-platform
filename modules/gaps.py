@@ -30,6 +30,6 @@ Rank each gap by:
 """
 
     return ask_ai(
-    prompt,
-    api_key
+        prompt,
+        api_key
     )
