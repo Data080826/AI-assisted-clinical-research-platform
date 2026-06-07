@@ -352,9 +352,10 @@ if st.session_state.research_question:
         ):
 
             st.session_state.study_design = (
-                generate_study_design(
-                    st.session_state.research_question
-                )
+               generate_study_design(
+                    st.session_state.research_question,
+                    study_type
+               )
             )
 
 # -----------------------------------
