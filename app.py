@@ -4,6 +4,8 @@
 
 import streamlit as st
 
+from openai import OpenAI
+
 from services.ncbi import (
     search_pubmed,
     fetch_pubmed_details
@@ -104,42 +106,38 @@ with st.sidebar:
             "🔑 Activate API Key"
         )
 
-        if submitted:
+       if submitted:
 
-            if not user_api_key:
+    if not user_api_key:
 
-                st.warning(
-                    "Please enter an API key."
-                )
-
-            else:
-
-                st.session_state.api_key_active = (
-                    user_api_key
-                )
-
-                st.success(
-                    "API Key Activated"
-                )
-
-    if st.session_state.api_key_active:
-
-        st.success(
-            "🟢 OpenAI Connected"
+        st.warning(
+            "Please enter an API key."
         )
-
-        if st.button(
-            "❌ Disconnect API Key"
-        ):
-
-            st.session_state.api_key_active = None
-            st.rerun()
 
     else:
 
-        st.info(
-            "🔴 OpenAI Not Connected"
-        )
+        try:
+
+            client = OpenAI(
+                api_key=user_api_key
+            )
+
+            # Verify the key works
+            client.models.list()
+
+            st.session_state.api_key_active = (
+                user_api_key
+            )
+
+            st.success(
+                "✅ API Key Verified"
+            )
+
+        except Exception as e:
+
+            st.error(
+                f"❌ Invalid API key: {str(e)}"
+            )
 
     st.markdown(
         "[Get your API key from OpenAI Platform](https://platform.openai.com/api-keys)"
