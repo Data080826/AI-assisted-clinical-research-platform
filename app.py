@@ -148,6 +148,18 @@ with st.sidebar:
     st.write("---")
     
 # -----------------------------------
+# API KEY REQUIRED
+# -----------------------------------
+
+if not st.session_state.api_key_active:
+
+    st.warning(
+        "🔑 Please activate your OpenAI API key in the sidebar to use the app."
+    )
+
+    st.stop()
+
+# -----------------------------------
 # RESEARCH TOPIC INPUT
 # -----------------------------------
 
@@ -155,7 +167,6 @@ research_topic = st.text_input(
     "Enter a research topic",
     placeholder="Semaglutide chronic kidney disease"
 )
-
 # -----------------------------------
 # PUBMED SEARCH
 # -----------------------------------
