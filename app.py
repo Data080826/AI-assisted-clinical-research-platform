@@ -47,6 +47,7 @@ st.set_page_config(
 # -----------------------------------
 # SESSION STATE
 # -----------------------------------
+
 if "api_key_active" not in st.session_state:
     st.session_state.api_key_active = None
     
@@ -233,13 +234,20 @@ if st.session_state.papers:
 
     if st.button("🧠 Summarize Literature"):
 
+        if not st.session_state.api_key_active:
+            st.warning(
+                "Please activate your OpenAI API key first."
+            )
+            st.stop()
+
         with st.spinner(
             "Analyzing literature..."
         ):
 
             st.session_state.summary = (
                 generate_literature_summary(
-                    st.session_state.papers
+                    st.session_state.papers,
+                    st.session_state.api_key_active
                 )
             )
 # -----------------------------------
@@ -270,8 +278,10 @@ if st.session_state.summary:
 
             st.session_state.gaps = (
                 find_research_gaps(
-                    st.session_state.summary
+                    st.session_state.summary,
+                    st.session_state.api_key_active
                 )
+
             )
 
 
@@ -305,7 +315,8 @@ if st.session_state.gaps:
 
             st.session_state.research_question = (
                 generate_research_question(
-                    st.session_state.gaps
+                    st.session_state.gaps,
+                    st.session_state.api_key_active
                 )
             )
 
@@ -353,8 +364,9 @@ if st.session_state.research_question:
 
             st.session_state.study_design = (
                generate_study_design(
-                    st.session_state.research_question,
-                    study_type
+                   st.session_state.research_question,
+                   study_type,
+                   st.session_state.api_key_active
                )
             )
 
