@@ -64,7 +64,7 @@ Then generate:
 12. Suggested TriNetX/Epic Cosmos Cohort Definition
 """
 
-   return ask_ai(
-       prompt,
-       api_key
-   )
+return ask_ai(
+    prompt,
+    api_key
+)
