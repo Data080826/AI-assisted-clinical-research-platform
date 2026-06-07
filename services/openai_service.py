@@ -22,4 +22,12 @@ def ask_ai(prompt):
         return response.choices[0].message.content
 
     except Exception as e:
-        return f"ERROR: {str(e)}"
+        import traceback
+
+        return f"""
+    ERROR:
+    {str(e)}
+
+    TRACEBACK:
+    {traceback.format_exc()}
+    """
