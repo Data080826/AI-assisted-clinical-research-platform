@@ -3,7 +3,10 @@
 from services.openai_service import ask_ai
 
 
-def find_research_gaps(summary):
+def find_research_gaps(
+    summary,
+    api_key
+):
 
     prompt = f"""
 You are a clinical research expert.
@@ -26,4 +29,7 @@ Rank each gap by:
 - Feasibility (1-10)
 """
 
-    return ask_ai(prompt)
+    return ask_ai(
+    prompt,
+    api_key
+    )
