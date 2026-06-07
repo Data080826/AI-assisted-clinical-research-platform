@@ -12,7 +12,8 @@ from services.openai_service import (
 
 def generate_study_design(
     research_question,
-    study_type
+    study_type,
+    api_key
 ):
     """
     Generate a clinical study design
@@ -63,4 +64,7 @@ Then generate:
 12. Suggested TriNetX/Epic Cosmos Cohort Definition
 """
 
-    return ask_ai(prompt)
+   return ask_ai(
+       prompt,
+       api_key
+   )
