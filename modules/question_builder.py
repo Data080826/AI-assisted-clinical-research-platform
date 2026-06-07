@@ -11,7 +11,8 @@ from services.openai_service import (
 # -----------------------------------
 
 def generate_research_question(
-    knowledge_gaps
+    knowledge_gaps,
+    api_key
 ):
     """
     Generate a research question
@@ -40,4 +41,7 @@ Generate:
 6. Recommended Study Design
 """
 
-    return ask_ai(prompt)
+    return ask_ai(
+        prompt,
+        api_key
+    )
