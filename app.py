@@ -83,7 +83,7 @@ st.title("📚 Clinical Research Copilot")
 # SIDEBAR
 # -----------------------------------
 with st.sidebar:
-    
+
     # -----------------------------------
     # USER API KEY
     # -----------------------------------
@@ -93,51 +93,70 @@ with st.sidebar:
     to enable Real AI responses
     """)
 
- with st.form("api_key_form"):
+    with st.form("api_key_form"):
 
-    user_api_key = st.text_input(
-        "",
-        type="password",
-        placeholder="sk-...",
-        help="Your API key is never stored"
-    )
+        user_api_key = st.text_input(
+            "",
+            type="password",
+            placeholder="sk-...",
+            help="Your API key is never stored"
+        )
 
-    submitted = st.form_submit_button(
-        "🔑 Activate API Key"
-    )
+        submitted = st.form_submit_button(
+            "🔑 Activate API Key"
+        )
 
-    if submitted:
+        if submitted:
 
-        if not user_api_key:
+            if not user_api_key:
 
-            st.warning(
-                "Please enter an API key."
-            )
-
-        else:
-
-            try:
-
-                client = OpenAI(
-                    api_key=user_api_key
+                st.warning(
+                    "Please enter an API key."
                 )
 
-                # Verify key
-                client.models.list()
+            else:
 
-                st.session_state.api_key_active = (
-                    user_api_key
-                )
+                try:
 
-                st.success(
-                    "✅ API Key Verified"
-                )
+                    client = OpenAI(
+                        api_key=user_api_key
+                    )
 
-            except Exception as e:
+                    # Verify key
+                    client.models.list()
 
-                st.error(
-                    f"❌ Invalid API key: {str(e)}"
-                )
+                    st.session_state.api_key_active = (
+                        user_api_key
+                    )
+
+                    st.success(
+                        "✅ API Key Verified"
+                    )
+
+                except Exception as e:
+
+                    st.error(
+                        f"❌ Invalid API key: {str(e)}"
+                    )
+
+    if st.session_state.api_key_active:
+
+        st.success(
+            "🟢 OpenAI Connected"
+        )
+
+        if st.button(
+            "❌ Disconnect API Key"
+        ):
+
+            st.session_state.api_key_active = None
+            st.rerun()
+
+    else:
+
+        st.info(
+            "🔴 OpenAI Not Connected"
+        )
 
     st.markdown(
         "[Get your API key from OpenAI Platform](https://platform.openai.com/api-keys)"
