@@ -46,6 +46,46 @@ st.set_page_config(
     layout="wide"
 )
 
+# ----------------------------
+# CUSTOM TITLE CSS
+# ----------------------------
+st.markdown("""
+<link href="https://fonts.googleapis.com/css2?family=Audiowide&display=swap" rel="stylesheet">
+
+<style>
+.tech-title {
+    font-family: 'Audiowide', sans-serif;
+    font-size: 3.2rem;
+    letter-spacing: 6px;
+    text-align: center;
+
+    background: linear-gradient(
+        90deg,
+        #00BFFF 0%,
+        #4F7DFF 40%,
+        #7B61FF 70%,
+        #D946EF 100%
+    );
+
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+</style>
+""", unsafe_allow_html=True)
+
+# ----------------------------
+# APP TITLE
+# ----------------------------
+st.markdown(
+    '<div class="tech-title">📚 CLINICAL RESEARCH COPILOT</div>',
+    unsafe_allow_html=True
+)
+
+# ----------------------------
+# REST OF APP
+# ----------------------------
+st.sidebar.title("Navigation")
+
 # -----------------------------------
 # SESSION STATE
 # -----------------------------------
