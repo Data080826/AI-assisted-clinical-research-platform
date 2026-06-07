@@ -93,51 +93,51 @@ with st.sidebar:
     to enable Real AI responses
     """)
 
-    with st.form("api_key_form"):
+ with st.form("api_key_form"):
 
-        user_api_key = st.text_input(
-            "",
-            type="password",
-            placeholder="sk-...",
-            help="Your API key is never stored"
-        )
+    user_api_key = st.text_input(
+        "",
+        type="password",
+        placeholder="sk-...",
+        help="Your API key is never stored"
+    )
 
-        submitted = st.form_submit_button(
-            "🔑 Activate API Key"
-        )
+    submitted = st.form_submit_button(
+        "🔑 Activate API Key"
+    )
 
-       if submitted:
+    if submitted:
 
-    if not user_api_key:
+        if not user_api_key:
 
-        st.warning(
-            "Please enter an API key."
-        )
-
-    else:
-
-        try:
-
-            client = OpenAI(
-                api_key=user_api_key
+            st.warning(
+                "Please enter an API key."
             )
 
-            # Verify the key works
-            client.models.list()
+        else:
 
-            st.session_state.api_key_active = (
-                user_api_key
-            )
+            try:
 
-            st.success(
-                "✅ API Key Verified"
-            )
+                client = OpenAI(
+                    api_key=user_api_key
+                )
 
-        except Exception as e:
+                # Verify key
+                client.models.list()
 
-            st.error(
-                f"❌ Invalid API key: {str(e)}"
-            )
+                st.session_state.api_key_active = (
+                    user_api_key
+                )
+
+                st.success(
+                    "✅ API Key Verified"
+                )
+
+            except Exception as e:
+
+                st.error(
+                    f"❌ Invalid API key: {str(e)}"
+                )
 
     st.markdown(
         "[Get your API key from OpenAI Platform](https://platform.openai.com/api-keys)"
