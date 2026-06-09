@@ -41,7 +41,7 @@ from modules.statistical_analysis import (
 # -----------------------------------
 
 st.set_page_config(
-    page_title="Clinical Research Copilot",
+    page_title="Research Copilot",
     page_icon="📚",
     layout="wide"
 )
@@ -119,7 +119,7 @@ st.markdown("""
 <div class="hero-container">
 
 <div class="hero-title">
-🧬 CLINICAL RESEARCH COPILOT
+🧬 RESEARCH COPILOT
 </div>
 
 <div class="hero-subtitle">
@@ -127,7 +127,6 @@ Accelerating Clinical Research with AI
 </div>
 
 <span class="badge">🔬 Literature Review</span>
-<span class="badge">📚 PubMed Search</span>
 <span class="badge">🧪 Study Design</span>
 <span class="badge">📈 Statistical Analysis</span>
 <span class="badge">🤖 AI Assistant</span>
