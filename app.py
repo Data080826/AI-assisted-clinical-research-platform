@@ -47,29 +47,98 @@ st.set_page_config(
 )
 
 # ----------------------------
-# CUSTOM TITLE CSS
+# HERO BANNER
 # ----------------------------
+
 st.markdown("""
 <style>
-.tech-title {
-    font-family: 'Audiowide', sans-serif;
-    font-size: clamp(1.8rem, 3vw, 3rem);
-    letter-spacing: 4px;
-    text-align: center;
-    white-space: nowrap;
+
+.hero-container{
+    padding:30px;
+    border-radius:20px;
+    text-align:center;
+
+    background: linear-gradient(
+        135deg,
+        #071A2E 0%,
+        #0B2545 50%,
+        #1E3A8A 100%
+    );
+
+    margin-bottom:25px;
+}
+
+.hero-title{
+    font-size: clamp(2.2rem, 5vw, 5rem);
+    font-weight:700;
+    letter-spacing:6px;
 
     background: linear-gradient(
         90deg,
-        #00BFFF,
-        #4F7DFF,
-        #7B61FF,
-        #D946EF
+        #00C6FF,
+        #5B7FFF,
+        #8B5CF6,
+        #D946EF,
+        #00C6FF
     );
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
+
+    background-size:300% auto;
+
+    -webkit-background-clip:text;
+    -webkit-text-fill-color:transparent;
+
+    animation: gradientMove 8s linear infinite;
 }
+
+.hero-subtitle{
+    color:#d1d5db;
+    font-size:1.15rem;
+    margin-top:10px;
+    margin-bottom:20px;
+}
+
+.badge{
+    display:inline-block;
+    padding:8px 16px;
+    margin:5px;
+    border-radius:20px;
+    background:rgba(255,255,255,0.12);
+    color:white;
+    font-size:0.9rem;
+}
+
+@keyframes gradientMove {
+    0% {background-position:0% center;}
+    100% {background-position:300% center;}
+}
+
 </style>
 """, unsafe_allow_html=True)
+
+st.markdown("""
+<div class="hero-container">
+
+<div class="hero-title">
+🧬 CLINICAL RESEARCH COPILOT
+</div>
+
+<div class="hero-subtitle">
+Accelerating Clinical Research with AI
+</div>
+
+<span class="badge">🔬 Literature Review</span>
+<span class="badge">📚 PubMed Search</span>
+<span class="badge">🧪 Study Design</span>
+<span class="badge">📈 Statistical Analysis</span>
+<span class="badge">🤖 AI Assistant</span>
+
+</div>
+""", unsafe_allow_html=True)
+
+st.image(
+    "assets/banner.png",
+    use_container_width=True
+)
 
 # ----------------------------
 # APP TITLE
