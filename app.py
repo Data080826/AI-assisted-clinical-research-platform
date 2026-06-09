@@ -140,13 +140,7 @@ st.image(
     use_container_width=True
 )
 
-# ----------------------------
-# APP TITLE
-# ----------------------------
-st.markdown(
-    '<div class="tech-title">📚 CLINICAL RESEARCH COPILOT</div>',
-    unsafe_allow_html=True
-)
+
 
 # ----------------------------
 # REST OF APP
