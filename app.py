@@ -135,11 +135,18 @@ Accelerating Clinical Research with AI
 </div>
 """, unsafe_allow_html=True)
 
-st.image(
-    "assets/banner.png",
-    use_container_width=True
-)
+#st.image(
+#    "assets/banner.png",
+#    use_container_width=True
+#)
+from pathlib import Path
 
+banner = Path("assets/banner.png")
+
+if banner.exists():
+    st.image(str(banner), use_container_width=True)
+else:
+    st.warning("Banner image not found")
 
 
 # ----------------------------
