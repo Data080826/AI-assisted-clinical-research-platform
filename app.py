@@ -139,7 +139,7 @@ Transform research questions into literature reviews, study designs,
 # ----------------------------
 # REST OF APP
 # ----------------------------
-st.sidebar.title("Navigation")
+# st.sidebar.title("Navigation")
 
 # -----------------------------------
 # SESSION STATE
