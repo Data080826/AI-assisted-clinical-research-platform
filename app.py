@@ -127,7 +127,7 @@ Transform research questions into literature reviews, study designs,
  statistical analyses,  and publication-ready insights.
 </div>
 
-<span class="badge">🔬 Literature Review</span>
+<span class="badge">📚 Literature Review</span>
 <span class="badge">🧪 Study Design</span>
 <span class="badge">📈 Statistical Analysis</span>
 <span class="badge">🤖 AI Assistant</span>
