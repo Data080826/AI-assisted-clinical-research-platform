@@ -123,7 +123,8 @@ st.markdown("""
 </div>
 
 <div class="hero-subtitle">
-Accelerating Clinical Research with AI
+Transform research questions into study designs, literature reviews,
+statistical analyses, and publication-ready insights.
 </div>
 
 <span class="badge">🔬 Literature Review</span>
