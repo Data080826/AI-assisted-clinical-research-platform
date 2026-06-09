@@ -123,8 +123,8 @@ st.markdown("""
 </div>
 
 <div class="hero-subtitle">
-Transform research questions into literature reviews,study designs, 
-statistical analyses, and publication-ready insights.
+Transform research questions into literature reviews, study designs, 
+ statistical analyses,  and publication-ready insights.
 </div>
 
 <span class="badge">🔬 Literature Review</span>
