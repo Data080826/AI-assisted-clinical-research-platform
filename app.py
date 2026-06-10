@@ -287,7 +287,7 @@ max_results = st.slider(
 )
 
 # -----------------------------------
-# PUBMED SEARCH
+# SEARCH BUTTON
 # -----------------------------------
 
 if st.button("Search Literature"):
@@ -315,8 +315,10 @@ if st.button("Search Literature"):
         )
 
 # -----------------------------------
-# DISPLAY PAPERS
+# DISPLAY ARTICLES
 # -----------------------------------
+
+selected_papers = []
 
 if st.session_state.papers:
 
@@ -334,8 +336,6 @@ if st.session_state.papers:
         "Select All Articles"
     )
 
-    selected_count = 0
-
     # -----------------------------------
     # ARTICLE LIST
     # -----------------------------------
@@ -349,26 +349,21 @@ if st.session_state.papers:
         if select_all:
             st.session_state[checkbox_key] = True
 
-        col1, col2 = st.columns(
-            [1, 20]
-        )
+        col1, col2 = st.columns([1, 20])
 
         # -----------------------------------
-        # CHECKBOX COLUMN
+        # CHECKBOX
         # -----------------------------------
 
         with col1:
 
-            selected = st.checkbox(
+            st.checkbox(
                 "",
                 key=checkbox_key
             )
 
-        if selected:
-            selected_count += 1
-
         # -----------------------------------
-        # ARTICLE COLUMN
+        # ARTICLE DETAILS
         # -----------------------------------
 
         with col2:
@@ -402,47 +397,28 @@ if st.session_state.papers:
 
         st.divider()
 
-    # -----------------------------------
-    # SELECTED PAPERS
-    # -----------------------------------
+        # -----------------------------------
+        # COLLECT SELECTED PAPERS
+        # -----------------------------------
 
-    selected_papers = [
-        paper
-        for paper in papers
         if st.session_state.get(
-            f"paper_{paper['PMID']}",
+            checkbox_key,
             False
-        )
-    ]
+        ):
+
+            selected_papers.append(
+                paper
+            )
+
+# -----------------------------------
+# SELECTED ARTICLE COUNT
+# -----------------------------------
+
+if st.session_state.papers:
 
     st.info(
         f"Selected Articles: {len(selected_papers)}"
     )
-
-    # -----------------------------------
-    # ACTION BUTTONS
-    # -----------------------------------
-
-    col1, col2 = st.columns(2)
-
-    with col1:
-
-        if st.button(
-            "Generate Review from Selected"
-        ):
-            st.write(
-                f"Using {len(selected_papers)} selected articles."
-            )
-
-    with col2:
-
-        if st.button(
-            "Compare Selected Articles"
-        ):
-            st.write(
-                f"Comparing {len(selected_papers)} selected articles."
-            )
-
 
 # -----------------------------------
 # AI LITERATURE SUMMARY
@@ -450,24 +426,37 @@ if st.session_state.papers:
 
 if st.session_state.papers:
 
-    if st.button("🧠 Summarize Literature"):
+    if st.button(
+        "🧠 Summarize Selected Articles"
+    ):
 
         if not st.session_state.api_key_active:
+
             st.warning(
                 "Please activate your OpenAI API key first."
             )
+
+            st.stop()
+
+        if len(selected_papers) == 0:
+
+            st.warning(
+                "Please select at least one article."
+            )
+
             st.stop()
 
         with st.spinner(
-            "Analyzing literature..."
+            f"Analyzing {len(selected_papers)} selected articles..."
         ):
 
             st.session_state.summary = (
                 generate_literature_summary(
-                    st.session_state.papers,
+                    selected_papers,
                     st.session_state.api_key_active
                 )
             )
+
 # -----------------------------------
 # DISPLAY SUMMARY
 # -----------------------------------
@@ -481,7 +470,6 @@ if st.session_state.summary:
     st.markdown(
         st.session_state.summary
     )
-    
 # -----------------------------------
 # KNOWLEDGE GAP FINDER
 # -----------------------------------
