@@ -284,17 +284,20 @@ if st.button("Search Literature"):
     st.session_state.gaps = ""
 
     if research_topic:
+        max_results = st.slider(
+               "Maximum Results",
+               min_value=5,
+               max_value=100,
+               value=20
+           )
 
         with st.spinner("Searching PubMed..."):
-
-            pmids = search_pubmed(
-                research_topic,
-                max_results=10
-            )
-
-            st.session_state.papers = (
-                fetch_pubmed_details(pmids)
-            )
+               pmids = search_pubmed(
+                   research_topic,
+                   max_results=max_results
+               )
+               st.session_state.papers = fetch_pubmed_details(pmids)
+        
 
     else:
 
