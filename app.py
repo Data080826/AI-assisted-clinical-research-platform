@@ -274,6 +274,18 @@ research_topic = st.text_input(
     "Enter a research topic",
     placeholder="Semaglutide chronic kidney disease"
 )
+
+# -----------------------------------
+# SEARCH SETTINGS
+# -----------------------------------
+
+max_results = st.slider(
+    "Maximum Results",
+    min_value=5,
+    max_value=100,
+    value=20
+)
+
 # -----------------------------------
 # PUBMED SEARCH
 # -----------------------------------
@@ -284,20 +296,17 @@ if st.button("Search Literature"):
     st.session_state.gaps = ""
 
     if research_topic:
-        max_results = st.slider(
-               "Maximum Results",
-               min_value=5,
-               max_value=100,
-               value=20
-           )
 
         with st.spinner("Searching PubMed..."):
-               pmids = search_pubmed(
-                   research_topic,
-                   max_results=max_results
-               )
-               st.session_state.papers = fetch_pubmed_details(pmids)
-        
+
+            pmids = search_pubmed(
+                research_topic,
+                max_results=max_results
+            )
+
+            st.session_state.papers = (
+                fetch_pubmed_details(pmids)
+            )
 
     else:
 
@@ -317,34 +326,122 @@ if st.session_state.papers:
         f"Found {len(papers)} papers"
     )
 
+    # -----------------------------------
+    # SELECT ALL
+    # -----------------------------------
+
+    select_all = st.checkbox(
+        "Select All Articles"
+    )
+
+    selected_count = 0
+
+    # -----------------------------------
+    # ARTICLE LIST
+    # -----------------------------------
+
     for paper in papers:
 
-        st.markdown(
-            f"### {paper['Title']}"
+        checkbox_key = (
+            f"paper_{paper['PMID']}"
         )
 
-        st.write(
-            f"Journal: {paper['Journal']}"
+        if select_all:
+            st.session_state[checkbox_key] = True
+
+        col1, col2 = st.columns(
+            [1, 20]
         )
 
-        st.write(
-            f"Date: {paper.get('Date', 'Not available')}"
-        )
+        # -----------------------------------
+        # CHECKBOX COLUMN
+        # -----------------------------------
 
-        st.write(
-            f"PMID: {paper['PMID']}"
-        )
+        with col1:
 
-        with st.expander("📄 View Abstract"):
-
-            st.write(
-                paper.get(
-                    "Abstract",
-                    "Abstract not available"
-                )
+            selected = st.checkbox(
+                "",
+                key=checkbox_key
             )
 
+        if selected:
+            selected_count += 1
+
+        # -----------------------------------
+        # ARTICLE COLUMN
+        # -----------------------------------
+
+        with col2:
+
+            st.markdown(
+                f"### {paper['Title']}"
+            )
+
+            st.write(
+                f"**Journal:** {paper['Journal']}"
+            )
+
+            st.write(
+                f"**Date:** {paper.get('Date', 'Not available')}"
+            )
+
+            st.write(
+                f"**PMID:** {paper['PMID']}"
+            )
+
+            with st.expander(
+                "📄 View Abstract"
+            ):
+
+                st.write(
+                    paper.get(
+                        "Abstract",
+                        "Abstract not available"
+                    )
+                )
+
         st.divider()
+
+    # -----------------------------------
+    # SELECTED PAPERS
+    # -----------------------------------
+
+    selected_papers = [
+        paper
+        for paper in papers
+        if st.session_state.get(
+            f"paper_{paper['PMID']}",
+            False
+        )
+    ]
+
+    st.info(
+        f"Selected Articles: {len(selected_papers)}"
+    )
+
+    # -----------------------------------
+    # ACTION BUTTONS
+    # -----------------------------------
+
+    col1, col2 = st.columns(2)
+
+    with col1:
+
+        if st.button(
+            "Generate Review from Selected"
+        ):
+            st.write(
+                f"Using {len(selected_papers)} selected articles."
+            )
+
+    with col2:
+
+        if st.button(
+            "Compare Selected Articles"
+        ):
+            st.write(
+                f"Comparing {len(selected_papers)} selected articles."
+            )
 
 
 # -----------------------------------
